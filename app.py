@@ -20,7 +20,7 @@ clear()
 def get_menu_choice():
     def print_menu():       # Your menu design here
         print(28 * "-", "LT Sync & Planning Plause UTILS", 28 * "-")
-        print("1)    RTD: FIlter and gather reports")
+        print("1)    RTD: Filter and gather reports")
         print("2)    RTD: Convert and format reports")
         print("3)    RTD: Cleanup and archive reports")
         print(85 * "-")
