@@ -5,8 +5,14 @@ import numpy as np
 import warnings
 
 
+import utils.helpers as helpers
+
+
 def process_ltsync():
     warnings.simplefilter("ignore")
+
+    dir_inputs = os.path.join(os.getcwd(), "INPUTS")
+    dir_outputs = os.path.join(os.getcwd(), "OUTPUTS")
 
     report_date = input('Please provide report date in MM-DD-YYYY format: ')
 
@@ -14,9 +20,9 @@ def process_ltsync():
     # omit_plants = [4040] - 4040 removed as per Linda Jager [2022-07-21]
     omit_plants = [6160, 4040]
 
-    new_report = os.path.join(os.getcwd(), 'data', 'NEW.xlsx')
-    original_report = os.path.join(os.getcwd(), 'data', 'ORIGINAL.xlsx')
-    o15_report = os.path.join(os.getcwd(), 'data', 'O15.xlsx')
+    new_report = os.path.join(dir_inputs, 'NEW.xlsx')
+    original_report = os.path.join(dir_inputs, 'ORIGINAL.xlsx')
+    o15_report = os.path.join(dir_inputs, 'O15.xlsx')
 
     # NEW
     df_new = pd.read_excel(new_report)
@@ -52,25 +58,32 @@ def process_ltsync():
                                'Material'], aggfunc=['count'], margins='true')
 
     # OUTPUTS
-    if os.path.exists(os.path.join(os.getcwd(), 'output')) == False:
-        os.mkdir(os.path.join(os.getcwd(), 'output'))
+    # if os.path.exists(os.path.join(os.getcwd(), 'output')) == False:
+    #     os.mkdir(os.path.join(os.getcwd(), 'output'))
 
-    with pd.ExcelWriter(os.path.join(os.getcwd(), 'output', f'{report_date} LT Sync_Daily after excludes.xlsx')) as writer:
+    with pd.ExcelWriter(os.path.join(dir_outputs, f'{report_date} LT Sync_Daily after excludes.xlsx')) as writer:
         pivot.to_excel(writer, sheet_name="summary")
         result.to_excel(writer, sheet_name="DATA", index=False)
 
-    with pd.ExcelWriter(os.path.join(os.getcwd(), 'output', f'00_ws_loadfile_lt_sync_{report_date}.xlsx')) as writer:
+    with pd.ExcelWriter(os.path.join(dir_outputs, f'00_lt_loadfile_{report_date}.xlsx')) as writer:
         load_data.to_excel(writer, sheet_name="LOAD", index=False)
 
     # END PROPMPT
-    text = input(
-        'Please find your processed file in OUTPUT folder. Press ENTER to close.')
+    helpers.await_char(
+        "y", "Please find your processed file in OUTPUT folder. Press Y to continue.")
 
 
-def split_laodfile():
+def split_loadfile():
     report_date = input('Please provide report date in MM-DD-YYYY format: ')
 
-    df = pd.read_excel('.//output//loadfile.xlsx')
+    dir_inputs = os.path.join(os.getcwd(), "INPUTS")
+    dir_outputs = os.path.join(os.getcwd(), "OUTPUTS")
+
+    for filename in os.listdir(dir_inputs):
+        if '00_lt_loadfile' in filename:
+            loadfile = os.path.join(dir_inputs, filename)
+
+    df = pd.read_excel(loadfile)
 
     print('Total parts to be processed: ')
     print(len(df))
@@ -87,8 +100,8 @@ def split_laodfile():
         print(len(i))
         x = x + 1
 
-        with pd.ExcelWriter(os.path.join(os.getcwd(), 'output', f'00_ws_loadfile_lt_sync_{report_date} - p{x}.xlsx')) as writer:
+        with pd.ExcelWriter(os.path.join(dir_outputs, f'00_lt_loadfile_{report_date} - p{x}.xlsx')) as writer:
             i.to_excel(writer, index=False)
 
-    text = input(
-        'Please find your processed files in OUTPUT folder. Press ENTER to close.')
+    helpers.await_char(
+        "y", "Please find your processed files in OUTPUT folder. Press Y to continue.")

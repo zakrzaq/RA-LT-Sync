@@ -55,7 +55,7 @@ def get_menu_choice():
             lt.process_ltsync()
             clear()
         elif choice == '5':
-            lt.split_laodfile()
+            lt.split_loadfile()
             clear()
         elif choice == '6':
             summary.prepare()
