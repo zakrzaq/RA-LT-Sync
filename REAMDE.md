@@ -2,6 +2,12 @@
 
 Developed for Rockwell Automation by `@zakrzaq`
 
+## SETUP
+
+1. Install `python 3.10` or up
+2. Run 'setup.bat' from app directory
+3.
+
 ## LT Sync
 
 ### PROCEDURE
