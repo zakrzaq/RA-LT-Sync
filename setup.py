@@ -31,6 +31,13 @@ dotenv.set_key(dotenv_file, "EDM_DRV", os.environ["EDM_DRV"])
 os.environ["APP_DIR"] = os.path.join(ra_app, 'LT-Sync')
 dotenv.set_key(dotenv_file, "APP_DIR", os.environ["APP_DIR"])
 
+os.environ["DIR_IN"] = os.path.join(ra_app, 'LT-Sync', 'INPUTS')
+dotenv.set_key(dotenv_file, "DIR_IN", os.environ["DIR_IN"])
+
+os.environ["DIR_OUT"] = os.path.join(ra_app, 'LT-Sync', 'OUTPUTS'),
+dotenv.set_key(dotenv_file, "DIR_OUT", os.environ["DIR_OUT"])
+
+
 # download_dir = os.path.join(homedir, downloads_folder)
 # os.environ["DWN_DIR"] = download_dir
 # dotenv.set_key(dotenv_file, "DWN_DIR", os.environ["DWN_DIR"])
