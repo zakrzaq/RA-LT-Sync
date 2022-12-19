@@ -1,6 +1,8 @@
 import os
 import dotenv
 
+import utils.helpers as hlp
+
 # FIND AND LOAD DOT ENV
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
@@ -23,9 +25,11 @@ ra_app = r'C:\RA-Apps'
 #                 os.environ["HOME_DIR"] = path
 #                 dotenv.set_key(dotenv_file, "HOME_DIR", os.environ["HOME_DIR"])
 
-# appdir = os.path.join(path, dev_folder)
-# os.environ["APP_DIR"] = appdir
-# dotenv.set_key(dotenv_file, "APP_DIR", os.environ["APP_DIR"])
+os.environ["EDM_DRV"] = hlp.find_rtd_directory()
+dotenv.set_key(dotenv_file, "EDM_DRV", os.environ["EDM_DRV"])
+
+os.environ["APP_DIR"] = os.path.join(ra_app, 'LT-Sync')
+dotenv.set_key(dotenv_file, "APP_DIR", os.environ["APP_DIR"])
 
 # download_dir = os.path.join(homedir, downloads_folder)
 # os.environ["DWN_DIR"] = download_dir

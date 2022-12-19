@@ -1,5 +1,6 @@
 import keyboard
 import win32api
+import os
 
 
 def await_char(char="y", msg="", func="", param=""):
@@ -25,4 +26,13 @@ def await_char(char="y", msg="", func="", param=""):
 def list_win_drives():
     drives = win32api.GetLogicalDriveStrings()
     drives = drives.split('\000')[:-1]
-    return drives
+    return drives[1:]
+
+
+def find_rtd_directory():
+    drive_list = list_win_drives()
+    for drv in drive_list:
+        for root, dirs, files in os.walk(drv):
+            for name in dirs:
+                if 'rtd_reports' in name:
+                    return os.path.join(root, name)
