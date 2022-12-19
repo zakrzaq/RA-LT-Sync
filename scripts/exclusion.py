@@ -1,11 +1,24 @@
 import pandas as pd
+import os
+
+import utils.helpers as helpers
+import utils.date_time as dt
 
 
 def add():
+    dir_inputs = os.path.join(os.getcwd(), "INPUTS")
+    dir_outputs = os.path.join(os.getcwd(), "OUTPUTS")
+
+    for filename in os.listdir(dir_inputs):
+        if 'LT sync exclusion list' in filename:
+            current_file = os.path.join(dir_inputs, filename)
+        if 'new_exclusions' in filename:
+            addition_file = os.path.join(dir_inputs, filename)
+
     # current list & new request
-    old = pd.read_excel("LT sync exclusion.xlsx",
+    old = pd.read_excel(current_file,
                         sheet_name='LT Exclusion list')
-    new = pd.read_excel("input.xlsx")
+    new = pd.read_excel(addition_file)
 
     # outer join
     outer = pd.merge(old, new, on="Material", how='outer')
@@ -61,9 +74,9 @@ def add():
     # duplic_list_clean['Date Added'] = pd.to_datetime(duplic_list_clean['Date Added'].astype(str), format='%d/%m/%Y')
 
     # SAVE RESULTS to OUTPUT.XLSX
-    today = pd.to_datetime("today")
-    today = today.strftime('%Y-%m-%d')
-    output_name = 'output.xlsx_' + today + '.xlsx'
+    today = dt.today_us()
+    output_name = os.path.join(
+        dir_outputs, ('NEW_LT sync exclusion list' + today + '.xlsx'))
 
     writer = pd.ExcelWriter(output_name, engine='xlsxwriter')
     new_list.to_excel(writer, sheet_name='Exclusion List', index=False)
@@ -76,3 +89,5 @@ def add():
 
     # KEEPS CORRECT RECIPE
     # outer[(outer['Requestor_y'].isnull()) | (outer['Requestor_x'] == outer['Requestor_y'])]
+
+    helpers.await_char()
