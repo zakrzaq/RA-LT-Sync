@@ -5,6 +5,7 @@ import scripts.lt_sync as lt
 import scripts.summary as summary
 import scripts.exclusion as excl
 import scripts.extension as extn
+import scripts.utility as util
 
 
 def clear():
@@ -30,6 +31,9 @@ def get_menu_choice():
         print(85 * "-")
         print("7)    EXCLUSION LIST: add new parts")
         print("8)    PDT EXTENSION: add new parts")
+        print(85 * "-")
+        print("9)    UTILITY: archive old RTD reports - careful!!!")
+
         print(85 * "-")
         print("X)    Close program")
         print(85 * "=")
@@ -65,6 +69,9 @@ def get_menu_choice():
             clear()
         elif choice == '8':
             extn.add()
+            clear()
+        elif choice == '9':
+            util.archive_old_in_rtd()
             clear()
         elif (choice == 'x' or choice == 'X'):
             int_choice = -1

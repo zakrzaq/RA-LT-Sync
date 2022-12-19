@@ -6,11 +6,14 @@ from openpyxl import load_workbook, Workbook
 from scipy.stats import norm
 import warnings
 import re
+import fnmatch
+
+import utils.date_time as dt
+import utils.helpers as helpers
 
 
 def filter_reports():
-    report_directory = 'Z:\\rtd_reports'
-    data_directory = os.path.join(report_directory)
+    report_directory = r'Z:\rtd_reports'
 
     sub_dir = 'data'
     output_directory = os.path.join(report_directory, sub_dir)
@@ -19,14 +22,16 @@ def filter_reports():
         os.mkdir(os.path.join(report_directory, sub_dir))
 
     def move_file(file):
-        print(f)
+        print("\t" + f)
         shutil.move(f, output_directory)
 
-    for filename in os.listdir(data_directory):
+    for filename in os.listdir(report_directory):
         # define filename
-        f = os.path.join(data_directory, filename)
+        f = os.path.join(report_directory, filename)
         # print(f)
         # check if file exists
+        # include_files = ['EDM_02_', 'EDM_03_', 'EDM_04_', 'EDM_06_', 'EDM_07_', 'EDM_08_', 'EDM_09_', 'EDM_11_',
+        #                  'EDM_12_', 'EDM_13_', 'EDM_14_', 'EDM_15_', 'EDM_17_', 'EDM_24_', 'EDM_27_', 'EDM_28_', 'EDM_29_', 'EDM_30_']
         if os.path.isfile(f):
             if 'EDM_02_' in f:
                 move_file(f)
