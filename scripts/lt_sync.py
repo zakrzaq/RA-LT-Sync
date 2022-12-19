@@ -85,19 +85,17 @@ def split_loadfile():
 
     df = pd.read_excel(loadfile)
 
-    print('Total parts to be processed: ')
-    print(len(df))
+    print(f'Total parts to be processed: {len(df)}')
 
     parts = math.ceil(len(df)/5000)
 
-    print('Load file will split into: ')
-    print(parts)
+    print(f'Load file will split into {parts} parts')
 
     spilts = np.array_split(df, parts)
 
     x = 0
     for i in spilts:
-        print(len(i))
+        print(f'\tPart {i} has {len(i)} parts.')
         x = x + 1
 
         with pd.ExcelWriter(os.path.join(dir_outputs, f'00_lt_loadfile_{report_date} - p{x}.xlsx')) as writer:

@@ -2,6 +2,7 @@
 .vscode/
 .stignore
 .env
+env
 
 # python
 __pycache__/
@@ -14,3 +15,4 @@ __pycache__/
 **/*.xlsm
 INPUTS/
 OUTPUTS/
+lt_sync.bat
