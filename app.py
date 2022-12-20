@@ -35,6 +35,7 @@ def get_menu_choice():
         print("9)    UTILITY: archive old RTD reports - careful!!!")
 
         print(85 * "-")
+        print("U)    Update program")
         print("X)    Close program")
         print(85 * "=")
 
@@ -72,6 +73,9 @@ def get_menu_choice():
             clear()
         elif choice == '9':
             util.archive_old_in_rtd()
+            clear()
+        elif (choice == 'u' or choice == 'U'):
+            os.system("git pull")
             clear()
         elif (choice == 'x' or choice == 'X'):
             int_choice = -1

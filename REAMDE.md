@@ -4,9 +4,13 @@ Developed for Rockwell Automation by `@zakrzaq`
 
 ## SETUP
 
-1. Install `python 3.10` or up
-2. Run 'setup.bat' from app directory
-3.
+1. Install `python 3.10` or up `git`
+2. `git clone` repository to `C:\RA-Apps`
+3. Run 'setup.bat' from app directory
+
+## UPDATE PROGRAM
+
+Simply run program and choose `U` from the menu. Then close the application selecting `R` and run it again. Hurray, you are at the newest version.
 
 ## LT Sync
 
