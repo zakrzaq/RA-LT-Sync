@@ -76,7 +76,7 @@ def get_menu_choice():
             clear()
         elif (choice == 'u' or choice == 'U'):
             os.system("git pull")
-            clear()
+            clear
         elif (choice == 'x' or choice == 'X'):
             int_choice = -1
             print("Exiting...")

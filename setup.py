@@ -7,6 +7,16 @@ import utils.helpers as hlp
 dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
+# LOCAL SYSTEM
+os.system("python -m pip install --upgrade pip")
+os.system("pip install virtualenv")
+os.system("python -m venv env")
+os.system("pip install python-dotenv pandas numpy openpyxl keyboard")
+os.system("pip list")
+os.system("echo call env/Scripts/activate.bat >> lt_sync.bat")
+os.system("echo call env/Scripts/Activate.ps1 >> lt_sync.bat")
+os.system("echo python app.py >> lt_sync.bat")
+
 # FIND DESKTOP FOLDER
 username = os.getlogin()
 usersdir = r'C:\Users'
