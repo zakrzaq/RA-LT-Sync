@@ -1,6 +1,7 @@
 import keyboard
 import win32api
 import os
+import shutil
 
 
 def await_char(char="y", msg="", func="", param=""):
@@ -36,3 +37,8 @@ def find_rtd_directory():
             for name in dirs:
                 if 'rtd_reports' in name:
                     return os.path.join(root, name)
+
+
+def move_file(file, dir):
+    print("\t" + file)
+    shutil.move(file, dir)

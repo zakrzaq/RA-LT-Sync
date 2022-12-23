@@ -39,3 +39,7 @@ Copy current **exclusion list** with filename `LT Sync PDT Extension List` into 
 Copy current **new additions file** in with filename `new_extensions` into `INPUT` folder.
 
 BOTH FORMATTED AS `xlsx`
+
+## TODO
+
+- [ ] scorecard: extend table [here](https://stackoverflow.com/questions/48657867/manipulate-existing-excel-table-using-openpyxl)

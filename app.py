@@ -6,6 +6,7 @@ import scripts.summary as summary
 import scripts.exclusion as excl
 import scripts.extension as extn
 import scripts.utility as util
+import keyboard
 
 
 def clear():

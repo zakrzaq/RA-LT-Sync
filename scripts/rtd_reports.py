@@ -1,15 +1,14 @@
 import os
 import pandas as pd
 from pathlib import Path
-import shutil
 from openpyxl import load_workbook, Workbook
-from scipy.stats import norm
 import warnings
 import re
-import fnmatch
+import shutil
 
 import utils.date_time as dt
-import utils.helpers as helpers
+from utils.helpers import move_file
+from utils.score_card import handle_scorecard
 
 
 def filter_reports():
@@ -21,10 +20,6 @@ def filter_reports():
     if os.path.exists(os.path.join(report_directory, sub_dir)) == False:
         os.mkdir(os.path.join(report_directory, sub_dir))
 
-    def move_file(file):
-        print("\t" + f)
-        shutil.move(f, output_directory)
-
     for filename in os.listdir(report_directory):
         # define filename
         f = os.path.join(report_directory, filename)
@@ -34,41 +29,41 @@ def filter_reports():
         #                  'EDM_12_', 'EDM_13_', 'EDM_14_', 'EDM_15_', 'EDM_17_', 'EDM_24_', 'EDM_27_', 'EDM_28_', 'EDM_29_', 'EDM_30_']
         if os.path.isfile(f):
             if 'EDM_02_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_03_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_04_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_06_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_07_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_08_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_09_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_11_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_12_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_13_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_14_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_15_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_17_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_24_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_27_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_28_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_29_' in f:
-                move_file(f)
+                move_file(f, output_directory)
             if 'EDM_30_' in f:
-                move_file(f)
+                move_file(f, output_directory)
 
     num_files = len([f for f in os.listdir(output_directory)
                     if os.path.isfile(os.path.join(output_directory, f))])
@@ -81,7 +76,7 @@ def convert_reports():
     # PRODUCTION DIRECTORY
     # report_directory = "Z:\\rtd_reports"
     report_directory = (
-        r"C:\Users\JZakrzewski\dev\RA-SCRIPTS\PYTHON\PLT & LT Sync\RTD Reports"
+        r"C:\RA-Apps\LT-Sync"
     )
     # DEV REPORT DIRECTORY
     # report_directory = os.path.join(os.getcwd())
@@ -93,7 +88,7 @@ def convert_reports():
 
     scorecard = {}
 
-    data_directory = os.path.join(report_directory, "data")
+    data_directory = os.path.join(report_directory,  'INPUTS', "data")
     output_directory = os.path.join(report_directory, report_date)
 
     if os.path.exists(os.path.join(report_directory, report_date)) == False:
@@ -432,48 +427,7 @@ def convert_reports():
     )
 
     # SCORECARD DATA
-    print(f"SCORCARD DATA: {scorecard}")
-    scorecard_total_pop = (
-        scorecard["rep_lt_pop"]
-        + scorecard["plant_nd_pop"]
-        + scorecard["spk_plant_pop"]
-        + scorecard["std_cost_pop"]
-    )
-    scorecard_total_isu = (
-        scorecard["rep_lt_isu"]
-        + scorecard["plant_nd_isu"]
-        + scorecard["spk_plant_isu"]
-        + scorecard["std_cost_isu"]
-    )
-    scorecard_percent = (scorecard_total_isu / scorecard_total_pop) * 100
-    scorecard_percent = round(scorecard_percent, 2)
-    scorecard_sigma = norm.cdf(1 - scorecard_percent) + 1.5
-    print(
-        f"Scorecard issues {scorecard_total_isu}\nScorecard populations: {scorecard_total_pop}\nScorecard percent: {scorecard_percent}\nScorecard Sigma: {scorecard_sigma}"
-    )
-
-    score_wb = Workbook()
-    ws = score_wb.active
-    ws.title = "Operations & Planning"
-    ws["A1"] = "Total Rep LT < IPT Issues"
-    ws["B1"] = "Total Rep LT < IPT Population"
-    ws["C1"] = "STO's where Send plant ND Issues"
-    ws["D1"] = "STO's where Send plant ND Population"
-    ws["E1"] = "Not extended to SPK plant Issues"
-    ws["F1"] = "Not extended to SPK plant Population"
-    ws["G1"] = "STO Parts wo Released Std Cost Issues"
-    ws["H1"] = "STO Parts wo Released Std Cost Population"
-
-    ws["A2"] = scorecard["rep_lt_isu"]
-    ws["B2"] = scorecard["rep_lt_pop"]
-    ws["C2"] = scorecard["rep_lt_isu"]
-    ws["D2"] = scorecard["plant_nd_pop"]
-    ws["E2"] = scorecard["plant_nd_isu"]
-    ws["F2"] = scorecard["spk_plant_pop"]
-    ws["G2"] = scorecard["spk_plant_isu"]
-    ws["H2"] = scorecard["std_cost_pop"]
-
-    score_wb.save(filename="scorecard.xlsx")
+    handle_scorecard(scorecard)
 
 
 def archive_reports():
