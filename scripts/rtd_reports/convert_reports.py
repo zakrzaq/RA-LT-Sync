@@ -1,73 +1,9 @@
 import os
 import pandas as pd
-from pathlib import Path
-from openpyxl import load_workbook, Workbook
+from openpyxl import load_workbook
 import warnings
-import re
-import shutil
 
-import utils.date_time as dt
-from utils.helpers import move_file
 from utils.score_card import handle_scorecard
-
-
-def filter_reports():
-    report_directory = r'Z:\rtd_reports'
-
-    sub_dir = 'data'
-    output_directory = os.path.join(report_directory, sub_dir)
-
-    if os.path.exists(os.path.join(report_directory, sub_dir)) == False:
-        os.mkdir(os.path.join(report_directory, sub_dir))
-
-    for filename in os.listdir(report_directory):
-        # define filename
-        f = os.path.join(report_directory, filename)
-        # print(f)
-        # check if file exists
-        # include_files = ['EDM_02_', 'EDM_03_', 'EDM_04_', 'EDM_06_', 'EDM_07_', 'EDM_08_', 'EDM_09_', 'EDM_11_',
-        #                  'EDM_12_', 'EDM_13_', 'EDM_14_', 'EDM_15_', 'EDM_17_', 'EDM_24_', 'EDM_27_', 'EDM_28_', 'EDM_29_', 'EDM_30_']
-        if os.path.isfile(f):
-            if 'EDM_02_' in f:
-                move_file(f, output_directory)
-            if 'EDM_03_' in f:
-                move_file(f, output_directory)
-            if 'EDM_04_' in f:
-                move_file(f, output_directory)
-            if 'EDM_06_' in f:
-                move_file(f, output_directory)
-            if 'EDM_07_' in f:
-                move_file(f, output_directory)
-            if 'EDM_08_' in f:
-                move_file(f, output_directory)
-            if 'EDM_09_' in f:
-                move_file(f, output_directory)
-            if 'EDM_11_' in f:
-                move_file(f, output_directory)
-            if 'EDM_12_' in f:
-                move_file(f, output_directory)
-            if 'EDM_13_' in f:
-                move_file(f, output_directory)
-            if 'EDM_14_' in f:
-                move_file(f, output_directory)
-            if 'EDM_15_' in f:
-                move_file(f, output_directory)
-            if 'EDM_17_' in f:
-                move_file(f, output_directory)
-            if 'EDM_24_' in f:
-                move_file(f, output_directory)
-            if 'EDM_27_' in f:
-                move_file(f, output_directory)
-            if 'EDM_28_' in f:
-                move_file(f, output_directory)
-            if 'EDM_29_' in f:
-                move_file(f, output_directory)
-            if 'EDM_30_' in f:
-                move_file(f, output_directory)
-
-    num_files = len([f for f in os.listdir(output_directory)
-                    if os.path.isfile(os.path.join(output_directory, f))])
-    input("Reports moved to DATA directory:  %s. \nPress ENTER key to finish. " % (num_files))
 
 
 def convert_reports():
@@ -75,9 +11,7 @@ def convert_reports():
 
     # PRODUCTION DIRECTORY
     # report_directory = "Z:\\rtd_reports"
-    report_directory = (
-        r"C:\RA-Apps\LT-Sync"
-    )
+    # report_directory = r"C:\RA-Apps\LT-Sync"
     # DEV REPORT DIRECTORY
     # report_directory = os.path.join(os.getcwd())
     # print(f'WORKING DIRECTORY: \n{report_directory}\n')
@@ -88,11 +22,11 @@ def convert_reports():
 
     scorecard = {}
 
-    data_directory = os.path.join(report_directory,  'INPUTS', "data")
-    output_directory = os.path.join(report_directory, report_date)
+    data_directory = os.path.join(os.environ["DIR_IN"], "INPUTS", "rtd_data")
+    output_directory = os.path.join(os.environ["DIR_OUT"], "INPUTS", report_date)
 
-    if os.path.exists(os.path.join(report_directory, report_date)) == False:
-        os.mkdir(os.path.join(report_directory, report_date))
+    if os.path.exists(output_directory) == False:
+        os.mkdir(output_directory)
 
     for filename in os.listdir(data_directory):
         # define filename
@@ -105,10 +39,14 @@ def convert_reports():
             if "EDM_02_Make_wo_LT_" in f:
                 # TODO: add relevat inforamtion to scoracard DF
                 new_name = os.path.join(
-                    output_directory, f"{report_date} Make wo LT.xlsx")
+                    output_directory, f"{report_date} Make wo LT.xlsx"
+                )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -118,10 +56,14 @@ def convert_reports():
                 print(new_name)
             if "EDM_03_sto_wo_lt_" in f:
                 new_name = os.path.join(
-                    output_directory, f"{report_date} STO_wo_LT.xlsx")
+                    output_directory, f"{report_date} STO_wo_LT.xlsx"
+                )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -136,7 +78,10 @@ def convert_reports():
                 scorecard["rep_lt_isu"] = df.shape[0]
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -150,7 +95,10 @@ def convert_reports():
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -159,8 +107,7 @@ def convert_reports():
                 # log filename
                 print(new_name)
             if "EDM_07_STO_ND_" in f:
-                new_name = os.path.join(
-                    output_directory, f"{report_date} STO ND.xlsx")
+                new_name = os.path.join(output_directory, f"{report_date} STO ND.xlsx")
                 scorecard["plant_nd_isu"] = df.shape[0]
                 # CREATE PIVOT
                 pivot = df.pivot_table(
@@ -181,7 +128,10 @@ def convert_reports():
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -242,7 +192,10 @@ def convert_reports():
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -256,7 +209,10 @@ def convert_reports():
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -270,7 +226,10 @@ def convert_reports():
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -295,7 +254,8 @@ def convert_reports():
             if "EDM_15_STO_parts_wo_released_std_cost_" in f:
                 scorecard["std_cost_isu"] = df.shape[0]
                 new_name = os.path.join(
-                    output_directory, f"{report_date} STO_Parts_wo_Released_Std_Cost.xlsx"
+                    output_directory,
+                    f"{report_date} STO_Parts_wo_Released_Std_Cost.xlsx",
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
@@ -316,7 +276,10 @@ def convert_reports():
                 )
                 # CREATE PIVOT
                 pivot = df.pivot_table(
-                    index=["Plant"], values=["Material"], aggfunc=["count"], margins="true"
+                    index=["Plant"],
+                    values=["Material"],
+                    aggfunc=["count"],
+                    margins="true",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -344,7 +307,8 @@ def convert_reports():
 
             if "EDM_27_NOT_EXT_SPK_PLANT_COUNT_" in f:
                 new_name = os.path.join(
-                    output_directory, f"{report_date} Not Extended to SPK Plant Count.xlsx"
+                    output_directory,
+                    f"{report_date} Not Extended to SPK Plant Count.xlsx",
                 )
                 # output data farame without df index & Pivot
                 with pd.ExcelWriter(os.path.join(output_directory, new_name)) as writer:
@@ -428,31 +392,3 @@ def convert_reports():
 
     # SCORECARD DATA
     handle_scorecard(scorecard)
-
-
-def archive_reports():
-    report_directory = 'Z:\\rtd_reports'
-
-    data_directory = os.path.join(report_directory, 'data')
-    archive_directory = os.path.join(
-        report_directory, 'ARCHIVE-PLANNING_PLAUSE')
-
-    # print(data_directory)
-    # print(archive_directory)
-
-    # archive data folder with rtd reports
-    for filename in os.listdir(data_directory):
-        f = os.path.join(data_directory, filename)
-        if os.path.isfile(f):
-            shutil.move(f, archive_directory)
-
-    # remove tmp dirs: data, input
-    if os.path.isdir(report_directory):
-        shutil.rmtree(data_directory)
-
-    # find and remove output dire
-    for filename in os.listdir(report_directory):
-        match = re.search(r"^\d{2}\-\d{2}\-\d{4}", filename)
-        if match:
-            if os.path.isdir(os.path.join(report_directory, filename)):
-                shutil.rmtree(os.path.join(report_directory, filename))

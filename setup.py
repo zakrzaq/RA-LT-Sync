@@ -1,4 +1,9 @@
 import os
+
+os.system("python -m pip install --upgrade pip")
+os.system("pip install virtualenv")
+os.system("pip install dotenv")
+
 import dotenv
 
 import utils.helpers as hlp
@@ -8,22 +13,19 @@ dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
 # LOCAL SYSTEM
-os.system("python -m pip install --upgrade pip")
-os.system("pip install virtualenv")
 os.system("python -m venv env")
 os.system("env/Scripts/activate.bat")
 os.system("env/Scripts/Activate.ps1")
-os.system("pip install python-dotenv pandas numpy openpyxl keyboard scipy pywin32")
-os.system("pip list")
+os.system("pip install -r requirements.txt")
 os.system("echo call env/Scripts/activate.bat >> lt_sync.bat")
 os.system("echo call env/Scripts/Activate.ps1 >> lt_sync.bat")
 os.system("echo python app.py >> lt_sync.bat")
 
 # FIND DESKTOP FOLDER
-username = os.getlogin()
-usersdir = fr'C:\Users\{username}'
-homedir = os.path.join(usersdir, username)
-ra_app = r'C:\RA-Apps'
+# username = os.getlogin()
+# usersdir = rf"C:\Users\{username}"
+# homedir = os.path.join(usersdir, username)
+ra_app = r"C:\RA-Apps"
 
 
 # # print(homedir)
@@ -40,13 +42,13 @@ ra_app = r'C:\RA-Apps'
 os.environ["EDM_DRV"] = hlp.find_rtd_directory()
 dotenv.set_key(dotenv_file, "EDM_DRV", os.environ["EDM_DRV"])
 
-os.environ["APP_DIR"] = os.path.join(ra_app, 'LT-Sync')
+os.environ["APP_DIR"] = os.path.join(ra_app, "LT-Sync")
 dotenv.set_key(dotenv_file, "APP_DIR", os.environ["APP_DIR"])
 
-os.environ["DIR_IN"] = os.path.join(ra_app, 'LT-Sync', 'INPUTS')
+os.environ["DIR_IN"] = os.path.join(ra_app, "LT-Sync", "INPUTS")
 dotenv.set_key(dotenv_file, "DIR_IN", os.environ["DIR_IN"])
 
-os.environ["DIR_OUT"] = os.path.join(ra_app, 'LT-Sync', 'OUTPUTS'),
+os.environ["DIR_OUT"] = (os.path.join(ra_app, "LT-Sync", "OUTPUTS"),)
 dotenv.set_key(dotenv_file, "DIR_OUT", os.environ["DIR_OUT"])
 
 

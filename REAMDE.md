@@ -6,11 +6,19 @@ Developed for Rockwell Automation by `@zakrzaq`
 
 1. Install `python 3.10` or up `git`
 2. `git clone` repository to `C:\RA-Apps`
-3. Run 'setup.bat' from app directory
+3. Run `python setup.py` from app directory
 
 ## UPDATE PROGRAM
 
 Simply run program and choose `U` from the menu. Then close the application selecting `R` and run it again. Hurray, you are at the newest version.
+
+## RTD REPORTS
+
+Run `Filter & gather report to collect` reports in `INPUTS/rtd_data` directory
+
+Run `Convert and format` to format reports. Outputs will be in `OUTPUTS/<date-provided>`
+
+Run `Cleanup and archive` after process is completed
 
 ## LT Sync
 

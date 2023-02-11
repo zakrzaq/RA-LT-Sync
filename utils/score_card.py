@@ -1,6 +1,8 @@
+import openpyxl
+from datetime import date
+
+
 def handle_scorecard(scorecard):
-    import openpyxl
-    from datetime import date
 
     print(f"SCORCARD DATA: {scorecard}")
     scorecard_total_pop = (

@@ -1,26 +1,30 @@
 import os
 import platform
-import scripts.rtd_reports as rtd
-import scripts.lt_sync as lt
+
+
+from scripts.rtd_reports.archive_reports import archive_reports
+from scripts.rtd_reports.convert_reports import convert_reports
+from scripts.rtd_reports.filter_reports import filter_reports
+from scripts.lt_sync.split_loadfile import split_loadfile
+from scripts.lt_sync.process_ltsync import process_ltsync
 import scripts.summary as summary
 import scripts.exclusion as excl
 import scripts.extension as extn
 import scripts.utility as util
-import keyboard
 
 
 def clear():
-    if platform.system() == 'Windows':
-        return os.system('cls')
+    if platform.system() == "Windows":
+        return os.system("cls")
     else:
-        return os.system('clear')
+        return os.system("clear")
 
 
 clear()
 
 
 def get_menu_choice():
-    def print_menu():       # Your menu design here
+    def print_menu():  # Your menu design here
         print(28 * "-", "LT Sync & Planning Plause UTILS", 28 * "-")
         print("1)    RTD: Filter and gather reports")
         print("2)    RTD: Convert and format reports")
@@ -43,42 +47,42 @@ def get_menu_choice():
     loop = True
     int_choice = -1
 
-    while loop:          # While loop which will keep going until loop = False
-        print_menu()    # Displays menu
+    while loop:  # While loop which will keep going until loop = False
+        print_menu()  # Displays menu
         choice = input("Choose procedure to run: ")
         print("\n")
 
-        if choice == '1':
-            rtd.filter_reports()
+        if choice == "1":
+            filter_reports()
             clear()
-        elif choice == '2':
-            rtd.convert_reports()
+        elif choice == "2":
+            convert_reports()
             clear()
-        elif choice == '3':
-            rtd.archive_reports()
+        elif choice == "3":
+            archive_reports()
             clear()
-        elif choice == '4':
-            lt.process_ltsync()
+        elif choice == "4":
+            process_ltsync()
             clear()
-        elif choice == '5':
-            lt.split_loadfile()
+        elif choice == "5":
+            split_loadfile()
             clear()
-        elif choice == '6':
+        elif choice == "6":
             summary.prepare()
             clear()
-        elif choice == '7':
+        elif choice == "7":
             excl.add()
             clear()
-        elif choice == '8':
+        elif choice == "8":
             extn.add()
             clear()
-        elif choice == '9':
+        elif choice == "9":
             util.archive_old_in_rtd()
             clear()
-        elif (choice == 'u' or choice == 'U'):
+        elif choice == "u" or choice == "U":
             os.system("git pull")
             clear
-        elif (choice == 'x' or choice == 'X'):
+        elif choice == "x" or choice == "X":
             int_choice = -1
             print("Exiting...")
             loop = False
