@@ -3,6 +3,7 @@ import win32api
 import os
 import shutil
 import dotenv
+import platform
 
 
 def use_dotenv():
@@ -46,5 +47,20 @@ def find_directory(dir: str):
 
 
 def move_file(file, dir):
-    print("\t" + file)
     shutil.move(file, dir)
+    return f"\t{file}"
+
+
+def output_msg(msg: str, *args: tuple[str]):
+    print(msg)
+    classes = "code-line "
+    for a in args:
+        classes += a + " "
+    return f'<p class="{classes}">{msg}</p>\n'
+
+
+def clear():
+    if platform.system() == "Windows":
+        return os.system("cls")
+    else:
+        return os.system("clear")

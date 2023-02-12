@@ -1,11 +1,12 @@
 import os
 
-from utils.helpers import move_file, use_dotenv, await_char
+from utils.helpers import move_file, use_dotenv, await_char, output_msg
 
 use_dotenv()
 
 
-def filter_reports():
+def filter_reports(server=False):
+    output += output_msg("Filtering current reports")
     report_directory = os.environ["EDM_DRV"]
 
     sub_dir = "rtd_data"
@@ -19,45 +20,66 @@ def filter_reports():
         f = os.path.join(report_directory, filename)
         # print(f)
         # check if file exists
-        # include_files = ['EDM_02_', 'EDM_03_', 'EDM_04_', 'EDM_06_', 'EDM_07_', 'EDM_08_', 'EDM_09_', 'EDM_11_',
-        #                  'EDM_12_', 'EDM_13_', 'EDM_14_', 'EDM_15_', 'EDM_17_', 'EDM_24_', 'EDM_27_', 'EDM_28_', 'EDM_29_', 'EDM_30_']
+        include_files = [
+            "EDM_02_",
+            "EDM_03_",
+            "EDM_04_",
+            "EDM_06_",
+            "EDM_07_",
+            "EDM_08_",
+            "EDM_09_",
+            "EDM_11_",
+            "EDM_12_",
+            "EDM_13_",
+            "EDM_14_",
+            "EDM_15_",
+            "EDM_17_",
+            "EDM_24_",
+            "EDM_27_",
+            "EDM_28_",
+            "EDM_29_",
+            "EDM_30_",
+        ]
+
         if os.path.isfile(f):
-            if "EDM_02_" in f:
-                move_file(f, output_directory)
-            if "EDM_03_" in f:
-                move_file(f, output_directory)
-            if "EDM_04_" in f:
-                move_file(f, output_directory)
-            if "EDM_06_" in f:
-                move_file(f, output_directory)
-            if "EDM_07_" in f:
-                move_file(f, output_directory)
-            if "EDM_08_" in f:
-                move_file(f, output_directory)
-            if "EDM_09_" in f:
-                move_file(f, output_directory)
-            if "EDM_11_" in f:
-                move_file(f, output_directory)
-            if "EDM_12_" in f:
-                move_file(f, output_directory)
-            if "EDM_13_" in f:
-                move_file(f, output_directory)
-            if "EDM_14_" in f:
-                move_file(f, output_directory)
-            if "EDM_15_" in f:
-                move_file(f, output_directory)
-            if "EDM_17_" in f:
-                move_file(f, output_directory)
-            if "EDM_24_" in f:
-                move_file(f, output_directory)
-            if "EDM_27_" in f:
-                move_file(f, output_directory)
-            if "EDM_28_" in f:
-                move_file(f, output_directory)
-            if "EDM_29_" in f:
-                move_file(f, output_directory)
-            if "EDM_30_" in f:
-                move_file(f, output_directory)
+            if [ele for ele in include_files if (ele in f)]:
+                output += move_file(f, output_directory)
+            # if "EDM_02_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_03_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_04_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_06_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_07_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_08_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_09_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_11_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_12_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_13_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_14_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_15_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_17_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_24_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_27_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_28_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_29_" in f:
+            #     move_file(f, output_directory)
+            # if "EDM_30_" in f:
+            #     move_file(f, output_directory)
 
     num_files = len(
         [
@@ -67,7 +89,13 @@ def filter_reports():
         ]
     )
 
-    await_char(
-        "y,"
-        "Reports moved to DATA directory:  %s. \nPress Y key to finish. " % (num_files)
-    )
+    if server:
+        output = output_msg(
+            f"Reports moved to DATA directory:  {num_files}. \nPress Y key to finish."
+        )
+        return output, "Filter RTD reports"
+    else:
+        await_char(
+            "y,"
+            f"Reports moved to DATA directory:  {num_files}. \nPress Y key to finish."
+        )

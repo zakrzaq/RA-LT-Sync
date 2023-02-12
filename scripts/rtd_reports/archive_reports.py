@@ -2,12 +2,14 @@ import os
 import re
 import shutil
 
-from utils.helpers import use_dotenv, await_char
+from utils.helpers import use_dotenv, await_char, output_msg
 
 use_dotenv()
 
 
-def archive_reports():
+def archive_reports(server=False):
+    output = ""
+
     report_directory = os.environ["EDM_DRV"]
 
     data_directory = os.path.join(report_directory, "rtd_data")
@@ -17,6 +19,7 @@ def archive_reports():
     # print(archive_directory)
 
     # archive data folder with rtd reports
+    output += output_msg("Archiving...")
     for filename in os.listdir(data_directory):
         f = os.path.join(data_directory, filename)
         if os.path.isfile(f):
@@ -32,5 +35,9 @@ def archive_reports():
         if match:
             if os.path.isdir(os.path.join(report_directory, filename)):
                 shutil.rmtree(os.path.join(report_directory, filename))
+    output += output_msg("Complete")
 
-    await_char("y", "Completed. Press Y to continue.")
+    if server:
+        return output, "Archive RTD reports"
+    else:
+        await_char("y", "Completed. Press Y to continue.")

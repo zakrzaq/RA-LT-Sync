@@ -4,12 +4,13 @@ import math
 import numpy as np
 
 
-from utils.helpers import await_char, use_dotenv
+from utils.helpers import await_char, use_dotenv, output_msg
 
 use_dotenv()
+output = ""
 
 
-def split_loadfile():
+def split_loadfile(server=False):
     report_date = input("Please provide report date in MM-DD-YYYY format: ")
 
     dir_inputs = os.environ["DIR_IN"]
@@ -21,16 +22,16 @@ def split_loadfile():
 
     df = pd.read_excel(loadfile)
 
-    print(f"Total parts to be processed: {len(df)}")
+    output += output_msg(f"Total parts to be processed: {len(df)}")
 
     parts = math.ceil(len(df) / 5000)
 
-    print(f"Load file will split into {parts} parts")
+    output += output_msg(f"Load file will split into {parts} parts")
 
-    spilts = np.array_split(df, parts)
+    splits = np.array_split(df, parts)
 
     x = 0
-    for i in spilts:
+    for i in splits:
         print(f"\tPart {i} has {len(i)} parts.")
         x = x + 1
 
@@ -38,7 +39,12 @@ def split_loadfile():
             os.path.join(dir_outputs, f"00_lt_loadfile_{report_date} - p{x}.xlsx")
         ) as writer:
             i.to_excel(writer, index=False)
+    output += output_msg("Complete")
 
-    await_char(
-        "y", "Please find your processed files in OUTPUT folder. Press Y to continue."
-    )
+    if server:
+        return output, "Split LT Sync loadfile"
+    else:
+        await_char(
+            "y",
+            "Please find your processed files in OUTPUT folder. Press Y to continue.",
+        )

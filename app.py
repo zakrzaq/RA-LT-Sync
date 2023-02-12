@@ -12,13 +12,7 @@ import scripts.exclusion as excl
 import scripts.extension as extn
 import scripts.utility as util
 
-
-def clear():
-    if platform.system() == "Windows":
-        return os.system("cls")
-    else:
-        return os.system("clear")
-
+from utils.helpers import clear
 
 clear()
 
