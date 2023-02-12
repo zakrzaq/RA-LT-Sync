@@ -1,15 +1,13 @@
-from hashlib import new
-from openpyxl import Workbook
 from openpyxl import load_workbook
 
 
 def prepare():
-    wb = load_workbook(filename='test.xlsx')
+    wb = load_workbook(filename="test.xlsx")
     ws = wb.active
 
     for row in ws:
         for cell in row:
-            if cell.value == 'Current':
+            if cell.value == "Current":
                 new_col = cell.column
 
     print(new_col)

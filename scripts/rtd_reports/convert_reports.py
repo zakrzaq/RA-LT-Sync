@@ -4,6 +4,9 @@ from openpyxl import load_workbook
 import warnings
 
 from utils.score_card import handle_scorecard
+from utils.helpers import use_dotenv, await_char
+
+use_dotenv()
 
 
 def convert_reports():
@@ -22,8 +25,8 @@ def convert_reports():
 
     scorecard = {}
 
-    data_directory = os.path.join(os.environ["DIR_IN"], "INPUTS", "rtd_data")
-    output_directory = os.path.join(os.environ["DIR_OUT"], "INPUTS", report_date)
+    data_directory = os.path.join(os.environ["EDM_DRV"], "rtd_data")
+    output_directory = os.path.join(os.environ["DIR_OUT"], report_date)
 
     if os.path.exists(output_directory) == False:
         os.mkdir(output_directory)
@@ -362,9 +365,9 @@ def convert_reports():
     #       print(f'{f} - file edited')
 
     # SUM VALUES FOR COUNT REPORTS V.2
-    for filename in os.listdir(os.path.join(report_directory, report_date)):
+    for filename in os.listdir(output_directory):
         # define filename
-        f = os.path.join(report_directory, report_date, filename)
+        f = os.path.join(output_directory, filename)
         # chekc if file exists
         if os.path.isfile(f):
             if "Count" in f:
@@ -386,9 +389,10 @@ def convert_reports():
                 wb.save(filename=f)
                 print(f"{f} - count file sum edited")
 
-    input(
-        f"\nFinished! Please find reports in {report_date} directory. \nPress ENTER to close."
-    )
-
     # SCORECARD DATA
     handle_scorecard(scorecard)
+
+    await_char(
+        "y",
+        f"\nFinished! Please find reports in {report_date} directory. \nPress Y to close.",
+    )

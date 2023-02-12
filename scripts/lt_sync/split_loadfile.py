@@ -4,14 +4,16 @@ import math
 import numpy as np
 
 
-import utils.helpers as helpers
+from utils.helpers import await_char, use_dotenv
+
+use_dotenv()
 
 
 def split_loadfile():
     report_date = input("Please provide report date in MM-DD-YYYY format: ")
 
-    dir_inputs = os.path.join(os.getcwd(), "INPUTS")
-    dir_outputs = os.path.join(os.getcwd(), "OUTPUTS")
+    dir_inputs = os.environ["DIR_IN"]
+    dir_outputs = os.environ["DIR_OUT"]
 
     for filename in os.listdir(dir_inputs):
         if "00_lt_loadfile" in filename:
@@ -37,6 +39,6 @@ def split_loadfile():
         ) as writer:
             i.to_excel(writer, index=False)
 
-    helpers.await_char(
+    await_char(
         "y", "Please find your processed files in OUTPUT folder. Press Y to continue."
     )

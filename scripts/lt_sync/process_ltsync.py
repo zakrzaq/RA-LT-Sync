@@ -3,14 +3,16 @@ import pandas as pd
 import warnings
 
 
-import utils.helpers as helpers
+from utils.helpers import await_char, use_dotenv
+
+use_dotenv()
 
 
 def process_ltsync():
     warnings.simplefilter("ignore")
 
-    dir_inputs = os.path.join(os.getcwd(), "INPUTS")
-    dir_outputs = os.path.join(os.getcwd(), "OUTPUTS")
+    dir_inputs = os.environ["DIR_IN"]
+    dir_outputs = os.environ["DIR_OUT"]
 
     report_date = input("Please provide report date in MM-DD-YYYY format: ")
 
@@ -120,6 +122,6 @@ def process_ltsync():
         load_data.to_excel(writer, sheet_name="LOAD", index=False)
 
     # END PROPMPT
-    helpers.await_char(
+    await_char(
         "y", "Please find your processed file in OUTPUT folder. Press Y to continue."
     )

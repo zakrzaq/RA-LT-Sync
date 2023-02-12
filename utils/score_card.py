@@ -1,5 +1,10 @@
 import openpyxl
 from datetime import date
+import os
+
+from utils.helpers import use_dotenv
+
+use_dotenv()
 
 
 def handle_scorecard(scorecard):
@@ -23,8 +28,7 @@ def handle_scorecard(scorecard):
         f"Scorecard issues {scorecard_total_isu}\nScorecard populations: {scorecard_total_pop}\nScorecard percent: {scorecard_percent}"
     )
 
-    f_scorecard = r"C:\Users\JZakrzewski\Rockwell Automation, Inc\EDM_Brazil - SCORECARD\SCORECARD - Metrics Goal Attainment Tracking.xlsx"
-    f_scorecard_out = r"C:\RA-Apps\LT-Sync\OUTPUTS\scorecard_out.xlsx"
+    f_scorecard = os.environ["SCORECARD"]
     wb_scorecard = openpyxl.load_workbook(f_scorecard)
     ws_ops_plan = wb_scorecard["Operations and Planning"]
 
@@ -54,8 +58,10 @@ def handle_scorecard(scorecard):
     #     if cell.value != None:
     #         # print(cell.address)
     #         last_row = cell.row
-    print(tbl_ops_plan.ref)
+    # print(tbl_ops_plan.ref)
     tbl_ops_plan.ref = f"A1:P{new_row}"
-    print(tbl_ops_plan.ref)
+    # print(tbl_ops_plan.ref)
 
-    wb_scorecard.save(f_scorecard_out)
+    # f_scorecard_out = r"C:\RA-Apps\LT-Sync\OUTPUTS\scorecard_out.xlsx"
+    # wb_scorecard.save(f_scorecard_out)
+    wb_scorecard.save(f_scorecard)

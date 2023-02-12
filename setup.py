@@ -6,7 +6,7 @@ os.system("pip install dotenv")
 
 import dotenv
 
-import utils.helpers as hlp
+from utils.helpers import find_directory
 
 # FIND AND LOAD DOT ENV
 dotenv_file = dotenv.find_dotenv()
@@ -22,10 +22,10 @@ os.system("echo call env/Scripts/Activate.ps1 >> lt_sync.bat")
 os.system("echo python app.py >> lt_sync.bat")
 
 # FIND DESKTOP FOLDER
-# username = os.getlogin()
-# usersdir = rf"C:\Users\{username}"
-# homedir = os.path.join(usersdir, username)
+
+userdir = rf"C:\Users\{os.getlogin()}"
 ra_app = r"C:\RA-Apps"
+scorecard = rf"{find_directory('EDM_Brazil - SCORECARD')}\SCORECARD - Metrics Goal Attainment Tracking.xlsx"
 
 
 # # print(homedir)
@@ -39,7 +39,7 @@ ra_app = r"C:\RA-Apps"
 #                 os.environ["HOME_DIR"] = path
 #                 dotenv.set_key(dotenv_file, "HOME_DIR", os.environ["HOME_DIR"])
 
-os.environ["EDM_DRV"] = hlp.find_rtd_directory()
+os.environ["EDM_DRV"] = find_directory("rtd_reports")
 dotenv.set_key(dotenv_file, "EDM_DRV", os.environ["EDM_DRV"])
 
 os.environ["APP_DIR"] = os.path.join(ra_app, "LT-Sync")
@@ -48,8 +48,11 @@ dotenv.set_key(dotenv_file, "APP_DIR", os.environ["APP_DIR"])
 os.environ["DIR_IN"] = os.path.join(ra_app, "LT-Sync", "INPUTS")
 dotenv.set_key(dotenv_file, "DIR_IN", os.environ["DIR_IN"])
 
-os.environ["DIR_OUT"] = (os.path.join(ra_app, "LT-Sync", "OUTPUTS"),)
+os.environ["DIR_OUT"] = os.path.join(ra_app, "LT-Sync", "OUTPUTS")
 dotenv.set_key(dotenv_file, "DIR_OUT", os.environ["DIR_OUT"])
+
+os.environ["SCORECARD"] = scorecard
+dotenv.set_key(dotenv_file, "SCORECARD", os.environ["SCORECARD"])
 
 
 # download_dir = os.path.join(homedir, downloads_folder)

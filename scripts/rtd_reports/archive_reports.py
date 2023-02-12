@@ -2,6 +2,10 @@ import os
 import re
 import shutil
 
+from utils.helpers import use_dotenv, await_char
+
+use_dotenv()
+
 
 def archive_reports():
     report_directory = os.environ["EDM_DRV"]
@@ -28,3 +32,5 @@ def archive_reports():
         if match:
             if os.path.isdir(os.path.join(report_directory, filename)):
                 shutil.rmtree(os.path.join(report_directory, filename))
+
+    await_char("y", "Completed. Press Y to continue.")

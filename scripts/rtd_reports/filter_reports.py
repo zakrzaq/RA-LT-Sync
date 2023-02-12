@@ -1,6 +1,8 @@
 import os
 
-from utils.helpers import move_file
+from utils.helpers import move_file, use_dotenv, await_char
+
+use_dotenv()
 
 
 def filter_reports():
@@ -64,7 +66,8 @@ def filter_reports():
             if os.path.isfile(os.path.join(output_directory, f))
         ]
     )
-    input(
-        "Reports moved to DATA directory:  %s. \nPress ENTER key to finish. "
-        % (num_files)
+
+    await_char(
+        "y,"
+        "Reports moved to DATA directory:  %s. \nPress Y key to finish. " % (num_files)
     )
