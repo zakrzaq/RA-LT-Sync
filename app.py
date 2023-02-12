@@ -1,6 +1,4 @@
 import os
-import platform
-
 
 from scripts.rtd_reports.archive_reports import archive_reports
 from scripts.rtd_reports.convert_reports import convert_reports

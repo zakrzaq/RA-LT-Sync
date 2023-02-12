@@ -108,6 +108,6 @@ def add(server=False):
     # outer[(outer['Requestor_y'].isnull()) | (outer['Requestor_x'] == outer['Requestor_y'])]
 
     if server:
-        return output
+        return output, "Exclusion list additions"
     else:
         await_char("y", "Completed. Press Y to continue.")

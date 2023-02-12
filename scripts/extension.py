@@ -42,6 +42,6 @@ def add(server=False):
     # print(new.head())
 
     if server:
-        return output
+        return output, "Extension list additions"
     else:
         await_char("y", "Completed. Press Y to continue.")
