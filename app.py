@@ -17,7 +17,7 @@ clear()
 
 def get_menu_choice():
     def print_menu():  # Your menu design here
-        print(20 * "-", "LT Sync & Planning Plause UTILS", 20 * "-")
+        print(23 * "-", "LT Sync & Planning Plause UTILS", 22 * "-")
         print("1)    RTD: Filter and gather reports")
         print("2)    RTD: Convert and format reports")
         print("3)    RTD: Cleanup and archive reports")
@@ -29,7 +29,7 @@ def get_menu_choice():
         print("7)    EXCLUSION LIST: add new parts")
         print("8)    PDT EXTENSION: add new parts")
         print(78 * "-")
-        print("9)    UTILITY: archive old RTD reports - careful!!!")
+        print("9)    UTILITY: archive old RTD reports")
 
         print(78 * "-")
         print("U)    Update program")
@@ -73,7 +73,7 @@ def get_menu_choice():
             clear()
         elif choice == "u" or choice == "U":
             os.system("git pull && pip install -r requirements.txt")
-            clear
+            clear()
         elif choice == "x" or choice == "X":
             int_choice = -1
             print("Exiting...")
