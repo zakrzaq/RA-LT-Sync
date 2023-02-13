@@ -3,13 +3,15 @@ import time
 import shutil
 import fnmatch
 
-from utils.helpers import await_char
+from utils.helpers import await_char, use_dotenv
+
+use_dotenv()
 
 
 def archive_old_in_rtd():
     now = time.time()
     old = now - 61 * 24 * 60 * 60
-    report_dir = r"Z:\rtd_reports"
+    report_dir = os.environ["EDM_DRV"]
     archive_dir = os.path.join(report_dir, "RTD_ARCHIVE")
 
     total = len(fnmatch.filter(os.listdir(report_dir), "*.*"))
