@@ -2,7 +2,9 @@ import os
 
 os.system("python -m pip install --upgrade pip")
 os.system("pip install virtualenv")
-os.system("pip install dotenv")
+os.system("pip install python_dotenv")
+os.system("pip install keyboard")
+os.system("pip install pywin32")
 
 import dotenv
 
