@@ -3,9 +3,13 @@ import os
 os.system("python -m pip install --upgrade pip")
 os.system("pip install virtualenv")
 os.system("pip install python_dotenv")
-os.system("pip install keyboard")
-os.system("pip install pywin32")
-os.system("pip install typing")
+os.system("python -m venv env")
+os.system("env/Scripts/activate.bat")
+os.system("env/Scripts/Activate.ps1")
+os.system("pip install -r requirements.txt")
+# os.system("pip install keyboard")
+# os.system("pip install pywin32")
+# os.system("pip install typing")
 
 import dotenv
 
@@ -16,10 +20,6 @@ dotenv_file = dotenv.find_dotenv()
 dotenv.load_dotenv(dotenv_file)
 
 # LOCAL SYSTEM
-os.system("python -m venv env")
-os.system("env/Scripts/activate.bat")
-os.system("env/Scripts/Activate.ps1")
-os.system("pip install -r requirements.txt")
 os.system("echo call env/Scripts/activate.bat >> lt_sync.bat")
 os.system("echo call env/Scripts/Activate.ps1 >> lt_sync.bat")
 os.system("echo python app.py >> lt_sync.bat")
