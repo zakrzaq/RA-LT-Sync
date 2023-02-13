@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 
+import utils.prompts as pr
 import utils.date_time as dt
 from utils.helpers import use_dotenv, await_char, output_msg
 
@@ -11,7 +12,7 @@ def add(server=False):
     dir_inputs = os.environ["DIR_IN"]
     dir_outputs = os.environ["DIR_OUT"]
 
-    output += output_msg("Loading data")
+    output += output_msg(f"{pr.info}Loading data")
 
     for filename in os.listdir(dir_inputs):
         if "LT Sync PDT Extension List" in filename:
@@ -19,7 +20,7 @@ def add(server=False):
         if "new_extensions" in filename:
             addition_file = os.path.join(dir_inputs, filename)
 
-    output += output_msg("Processing...")
+    output += output_msg(f"{pr.info}Processing...")
 
     pdt_list = pd.read_excel(current_file, sheet_name="Sheet1")
     new = pd.read_excel(addition_file)
@@ -27,16 +28,15 @@ def add(server=False):
     right_join = pd.merge(pdt_list, new, on="Material", how="right")
     not_in = right_join[right_join["Requestor"].isnull()]
     not_in.drop(["Requestor", "Date Added"], axis=1, inplace=True)
-    print(not_in.head())
 
-    output += output_msg("Saving results...")
+    output += output_msg(f"{pr.file}Saving results...")
 
     today = dt.today_us()
     output_name = os.path.join(
         dir_outputs, ("ADDITIONS_LT Sync PDT Extension List" + today + ".xlsx")
     )
 
-    output += output_msg("Complete")
+    output += output_msg(f"{pr.info}Complete")
 
     not_in.to_excel(output_name, index=False)
     # print(new.head())

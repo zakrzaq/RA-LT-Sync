@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import warnings
 
-
+import utils.prompts as pr
 from utils.helpers import await_char, use_dotenv, output_msg
 
 use_dotenv()
@@ -15,7 +15,7 @@ def process_ltsync(server=False):
     dir_inputs = os.environ["DIR_IN"]
     dir_outputs = os.environ["DIR_OUT"]
 
-    report_date = input("Please provide report date in MM-DD-YYYY format: ")
+    report_date = input(f"{pr.prmt}Please provide report date in MM-DD-YYYY format: ")
 
     # omit_plants = [6160] - 6160 removed as per Vanessa Tonelo [2022-04-04]
     # omit_plants = [4040] - 4040 removed as per Linda Jager [2022-07-21]
@@ -26,7 +26,7 @@ def process_ltsync(server=False):
     o15_report = os.path.join(dir_inputs, "O15.xlsx")
 
     # NEW
-    output += output_msg("Loading NEW QUERY data...")
+    output += output_msg(f"{pr.info}Loading NEW QUERY data...")
     df_new = pd.read_excel(new_report)
     df_new_clean = df_new.drop(
         [
@@ -53,7 +53,7 @@ def process_ltsync(server=False):
     )
 
     # ORIGINAL
-    output += output_msg("Loading ORIGINAL QUERY data...")
+    output += output_msg(f"{pr.info}Loading ORIGINAL QUERY data...")
     df_org = pd.read_excel(original_report)
     df_org_clean = df_org.drop(
         [
@@ -80,12 +80,12 @@ def process_ltsync(server=False):
     )
 
     # OCEAN 1170 5130
-    output += output_msg("Loading 3 QUERY data...")
+    output += output_msg(f"{pr.info}Loading 3 QUERY data...")
 
     df_o15 = pd.read_excel(o15_report)
 
     # COMBINE
-    output += output_msg("Processing...")
+    output += output_msg(f"{pr.info}Processing...")
 
     frames = [df_new_clean, df_org_clean, df_o15]
     df_combined = pd.concat(frames)
@@ -94,10 +94,10 @@ def process_ltsync(server=False):
     result = df_combined[(~df_combined["Rcv Plt"].isin(omit_plants))]
     omitted = df_combined[(df_combined["Rcv Plt"].isin(omit_plants))]
     output += output_msg(
-        f"LT Sync Daily after exclusion has total of: {result.shape[0]} records."
+        f"{pr.file}LT Sync Daily after exclusion has total of: {result.shape[0]} records."
     )
     output += output_msg(
-        f"Total of changes were excluded from the process: {omitted.shape[0]} records."
+        f"{pr.file}Total of changes were excluded from the process: {omitted.shape[0]} records."
     )
 
     # WS LOAD DATA
@@ -119,7 +119,7 @@ def process_ltsync(server=False):
     # if os.path.exists(os.path.join(os.getcwd(), 'output')) == False:
     #     os.mkdir(os.path.join(os.getcwd(), 'output'))
 
-    output += output_msg("Saving results to LT SYnc daily & Loadfile")
+    output += output_msg(f"{pr.info}Saving results to LT SYnc daily & Loadfile")
     with pd.ExcelWriter(
         os.path.join(dir_outputs, f"{report_date} LT Sync_Daily after excludes.xlsx")
     ) as writer:
@@ -130,7 +130,7 @@ def process_ltsync(server=False):
         os.path.join(dir_outputs, f"00_lt_loadfile_{report_date}.xlsx")
     ) as writer:
         load_data.to_excel(writer, sheet_name="LOAD", index=False)
-    output += output_msg("Complete")
+    output += output_msg(f"{pr.done}Complete")
 
     # END PROPMPT
     if server:
@@ -138,5 +138,5 @@ def process_ltsync(server=False):
     else:
         await_char(
             "y",
-            "Please find your processed file in OUTPUT folder. Press Y to continue.",
+            f"{pr.prmt}Please find your processed file in OUTPUT folder. Press Y to continue.",
         )

@@ -1,6 +1,7 @@
 import pandas as pd
 import os
 
+import utils.prompts as pr
 import utils.date_time as dt
 from utils.helpers import use_dotenv, await_char, output_msg
 
@@ -12,7 +13,7 @@ def add(server=False):
     dir_inputs = os.environ["DIR_IN"]
     dir_outputs = os.environ["DIR_OUT"]
 
-    output += output_msg("Loading data...")
+    output += output_msg(f"{pr.info}Loading data...")
 
     for filename in os.listdir(dir_inputs):
         if "LT sync exclusion list" in filename:
@@ -21,7 +22,7 @@ def add(server=False):
             addition_file = os.path.join(dir_inputs, filename)
 
     # current list & new request
-    output += output_msg("Processing data")
+    output += output_msg(f"{pr.info}Processing data")
 
     old = pd.read_excel(current_file, sheet_name="LT Exclusion list")
     new = pd.read_excel(addition_file)
@@ -88,7 +89,7 @@ def add(server=False):
     # duplic_list_clean['Date Added'] = pd.to_datetime(duplic_list_clean['Date Added'].astype(str), format='%d/%m/%Y')
 
     # SAVE RESULTS to OUTPUT.XLSX
-    output += output_msg("Saving results...")
+    output += output_msg(f"{pr.file}Saving results...")
 
     today = dt.today_us()
     output_name = os.path.join(
@@ -99,7 +100,7 @@ def add(server=False):
     new_list.to_excel(writer, sheet_name="Exclusion List", index=False)
     duplic_list_clean.to_excel(writer, sheet_name="Duplicates removed", index=False)
     writer.save()
-    output += output_msg("Complete")
+    output += output_msg(f"{pr.done}Complete")
 
     # .to_excel('pdt_ext_new.xlsx', index=False)
     # print(new.head())

@@ -4,6 +4,7 @@ import os
 import shutil
 import dotenv
 import platform
+import utils.prompts as pr
 
 from typing import Tuple
 
@@ -15,7 +16,7 @@ def use_dotenv():
 
 def await_char(char="y", msg="", func="", param=""):
     if msg == "":
-        msg_out = "Press {} to continue".format(char.upper())
+        msg_out = f"{pr.info}Press {char.upper()} to continue"
     else:
         msg_out = msg
     print(msg_out)
@@ -50,7 +51,7 @@ def find_directory(dir: str):
 
 def move_file(file, dir):
     shutil.move(file, dir)
-    return f"\t{file}"
+    return f"{pr.file}{file}"
 
 
 def output_msg(msg: str, *args: Tuple[str]):

@@ -72,7 +72,7 @@ def get_menu_choice():
             util.archive_old_in_rtd()
             clear()
         elif choice == "u" or choice == "U":
-            os.system("git pull")
+            os.system("git pull && pip install -r requirements.txt")
             clear
         elif choice == "x" or choice == "X":
             int_choice = -1
