@@ -6,7 +6,6 @@ import utils.prompts as pr
 from utils.helpers import await_char, use_dotenv, output_msg
 
 use_dotenv()
-output = ""
 
 
 def process_ltsync(server=False):
@@ -14,6 +13,7 @@ def process_ltsync(server=False):
 
     dir_inputs = os.environ["DIR_IN"]
     dir_outputs = os.environ["DIR_OUT"]
+    output = ""
 
     report_date = input(f"{pr.prmt}Please provide report date in MM-DD-YYYY format: ")
 

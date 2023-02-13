@@ -7,7 +7,6 @@ import utils.prompts as pr
 from utils.helpers import await_char, use_dotenv, output_msg
 
 use_dotenv()
-output = ""
 
 
 def split_loadfile(server=False):
@@ -15,6 +14,7 @@ def split_loadfile(server=False):
 
     dir_inputs = os.environ["DIR_IN"]
     dir_outputs = os.environ["DIR_OUT"]
+    output = ""
 
     for filename in os.listdir(dir_inputs):
         if "00_lt_loadfile" in filename:
@@ -32,8 +32,8 @@ def split_loadfile(server=False):
 
     x = 0
     for i in splits:
-        print(f"{pr.file}Part {i} has {len(i)} parts.")
-        x = x + 1
+        output += output_msg(f"{pr.file}Part {x+1} has {len(i)} parts.")
+        x += 1
 
         with pd.ExcelWriter(
             os.path.join(dir_outputs, f"00_lt_loadfile_{report_date} - p{x}.xlsx")
