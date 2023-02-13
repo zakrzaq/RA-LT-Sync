@@ -5,6 +5,7 @@ os.system("pip install virtualenv")
 os.system("pip install python_dotenv")
 os.system("pip install keyboard")
 os.system("pip install pywin32")
+os.system("pip install typing")
 
 import dotenv
 
