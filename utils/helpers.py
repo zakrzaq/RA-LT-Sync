@@ -5,7 +5,7 @@ import shutil
 import dotenv
 import platform
 
-from typing import tuple
+from typing import Tuple
 
 
 def use_dotenv():
@@ -53,7 +53,7 @@ def move_file(file, dir):
     return f"\t{file}"
 
 
-def output_msg(msg: str, *args: tuple[str]):
+def output_msg(msg: str, *args: Tuple[str]):
     print(msg)
     classes = "code-line "
     for a in args:
