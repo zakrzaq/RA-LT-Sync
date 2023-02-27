@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 import warnings
 
 from utils.score_card import handle_scorecard
-from utils.helpers import use_dotenv, await_char, output_msg
+from utils.helpers import use_dotenv, await_char, output_msg, check_dir
 import utils.prompts as pr
 
 use_dotenv()
@@ -45,8 +45,7 @@ def convert_reports(server=False):
     data_directory = os.path.join(os.environ["EDM_DRV"], "rtd_data")
     output_directory = os.path.join(os.environ["DIR_OUT"], report_date)
 
-    if os.path.exists(output_directory) == False:
-        os.mkdir(output_directory)
+    check_dir(output_directory)
 
     output += output_msg(f"{pr.info}Converting and formatting RTD reports:")
 

@@ -5,7 +5,7 @@ import shutil
 import dotenv
 import platform
 import utils.prompts as pr
-
+from state.output import output
 from typing import Tuple
 
 
@@ -60,6 +60,18 @@ def output_msg(msg: str, *args: Tuple[str]):
     for a in args:
         classes += a + " "
     return f'<p class="{classes}">{msg}</p>\n'
+
+
+def check_dir(dir):
+    if not os.path.exists(dir):
+        os.mkdir(dir)
+
+
+def end_script(server=False):
+    if server:
+        return output.get_markup()
+    else:
+        await_char("y", "Script completed.")
 
 
 def clear():
