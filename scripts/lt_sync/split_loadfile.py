@@ -18,7 +18,7 @@ def split_loadfile(server=False):
 
     for filename in os.listdir(dir_outputs):
         if "00_lt_loadfile" in filename:
-            loadfile = os.path.join(dir_inputs, filename)
+            loadfile = os.path.join(dir_outputs, filename)
 
     df = pd.read_excel(loadfile)
 
