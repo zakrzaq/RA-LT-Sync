@@ -16,7 +16,7 @@ def split_loadfile(server=False):
     dir_outputs = os.environ["DIR_OUT"]
     output = ""
 
-    for filename in os.listdir(dir_inputs):
+    for filename in os.listdir(dir_outputs):
         if "00_lt_loadfile" in filename:
             loadfile = os.path.join(dir_inputs, filename)
 
