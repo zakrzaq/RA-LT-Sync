@@ -134,7 +134,7 @@ def convert_reports(server=False):
                 output += handle_input_file(
                     f, new_name, ["RECV_PLANT", "Material", "count", "true"]
                 )
-            if "EDM_11_Strat_group_check_" "EDM_11_Strat_group_check_" in f:
+            if "EDM_11_Strat_group_check_" in f:
                 new_name = os.path.join(
                     output_directory, f"{report_date} Strategy_Grp_Check.xlsx"
                 )
