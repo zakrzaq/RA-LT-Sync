@@ -1,10 +1,25 @@
 import openpyxl
 from datetime import date
 import os
+from openpyxl.formula.translate import Translator
+
 
 from utils.helpers import use_dotenv
 
 use_dotenv()
+
+
+def extend_formulae(sheet, start_row: int, col_letter: str):
+    last_row = sheet.max_row
+    i = start_row
+    while i < last_row:
+        i += 1
+        origin_formula = f"{col_letter}15"
+        formula = sheet[origin_formula].value
+        print(formula)
+        sheet[f"{col_letter}{i}"] = Translator(
+            formula, origin=origin_formula
+        ).translate_formula(f"{col_letter}{i}")
 
 
 def handle_scorecard(scorecard):
@@ -51,17 +66,9 @@ def handle_scorecard(scorecard):
     ws_ops_plan[f"M{new_row}"] = scorecard["std_cost_isu"]
     ws_ops_plan[f"N{new_row}"] = scorecard["std_cost_pop"]
 
-    # print(ws_ops_plan.tables)
-    # last_row = ""
     tbl_ops_plan = ws_ops_plan.tables["Operations_and_Planning"]
-    # for cell in ws_ops_plan["A"]:
-    #     if cell.value != None:
-    #         # print(cell.address)
-    #         last_row = cell.row
-    # print(tbl_ops_plan.ref)
     tbl_ops_plan.ref = f"A1:P{new_row}"
-    # print(tbl_ops_plan.ref)
 
-    # f_scorecard_out = r"C:\RA-Apps\LT-Sync\OUTPUTS\scorecard_out.xlsx"
-    # wb_scorecard.save(f_scorecard_out)
+    extend_formulae(ws_ops_plan, 16, "C")
+
     wb_scorecard.save(f_scorecard)
