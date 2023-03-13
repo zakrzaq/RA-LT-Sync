@@ -218,13 +218,13 @@ def convert_reports(server=False):
                 df = pd.read_excel(f, sheet_name="Sheet1")
                 total = df["QTY"].sum()
                 if scorcard_reports[4] in f:
-                    scorecard.add("rep_lt_pop", df.shape[0])
+                    scorecard.add("rep_lt_pop", total)
                 if scorcard_reports[5] in f:
-                    scorecard.add("plant_nd_pop", df.shape[0])
+                    scorecard.add("plant_nd_pop", total)
                 if scorcard_reports[6] in f:
-                    scorecard.add("spk_plant_pop", df.shape[0])
+                    scorecard.add("spk_plant_pop", total)
                 if scorcard_reports[7] in f:
-                    scorecard.add("std_cost_pop", df.shape[0])
+                    scorecard.add("std_cost_pop", total)
 
                 wb = load_workbook(filename=f)
                 sht = wb.active
