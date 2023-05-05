@@ -55,7 +55,7 @@ def handle_scorecard(scorecard):
     # today_style = Style(number_format="DD-MMM-YYYY")
     fy = "FY" + date.today().strftime("%b-%y")[-2:]
 
-    ws_ops_plan[f"A{new_row}"] = datetime.datetime.strptime(today, "%d/%m/%Y")
+    ws_ops_plan[f"A{new_row}"] = datetime.datetime.strptime(today, "%d/%m/%Y")  # type: ignore
     ws_ops_plan[f"A{new_row}"].number_format = "dd-mmm-yy;@"
     ws_ops_plan[f"B{new_row}"] = fy
 
