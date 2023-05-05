@@ -1,7 +1,10 @@
 import openpyxl
 from datetime import date
+import datetime
 import os
 from openpyxl.formula.translate import Translator
+
+# from openpyxl.styles import Style
 
 
 from utils.helpers import use_dotenv
@@ -23,7 +26,6 @@ def extend_formulae(sheet, start_row: int, col_letter: str):
 
 
 def handle_scorecard(scorecard):
-
     print(f"SCORCARD DATA: {scorecard}")
     scorecard_total_pop = (
         scorecard["rep_lt_pop"]
@@ -49,22 +51,34 @@ def handle_scorecard(scorecard):
 
     new_row = len(list(ws_ops_plan.rows)) + 1
 
-    today = date.today().strftime("%d/%m/%y")
-    date_my = date.today().strftime("%b-%y")
-    fy = "FY" + date_my[-2:]
+    today = date.today().strftime("%d/%m/%Y")
+    # today_style = Style(number_format="DD-MMM-YYYY")
+    fy = "FY" + date.today().strftime("%b-%y")[-2:]
 
-    ws_ops_plan[f"A{new_row}"] = date_my
+    ws_ops_plan[f"A{new_row}"] = datetime.datetime.strptime(today, "%d/%m/%Y")
+    ws_ops_plan[f"A{new_row}"].number_format = "dd-mmm-yy;@"
     ws_ops_plan[f"B{new_row}"] = fy
-    ws_ops_plan[f"P{new_row}"] = today
 
     ws_ops_plan[f"D{new_row}"] = scorecard["rep_lt_isu"]
     ws_ops_plan[f"E{new_row}"] = scorecard["rep_lt_pop"]
+    ws_ops_plan[
+        f"F{new_row}"
+    ] = f'{scorecard["rep_lt_isu"]} / {scorecard["rep_lt_pop"]}'
     ws_ops_plan[f"G{new_row}"] = scorecard["plant_nd_isu"]
     ws_ops_plan[f"H{new_row}"] = scorecard["plant_nd_pop"]
+    ws_ops_plan[
+        f"I{new_row}"
+    ] = f'{scorecard["plant_nd_isu"]} / {scorecard["plant_nd_pop"]}'
     ws_ops_plan[f"J{new_row}"] = scorecard["spk_plant_isu"]
     ws_ops_plan[f"K{new_row}"] = scorecard["spk_plant_pop"]
+    ws_ops_plan[
+        f"L{new_row}"
+    ] = f'{scorecard["spk_plant_isu"]} / {scorecard["spk_plant_pop"]}'
     ws_ops_plan[f"M{new_row}"] = scorecard["std_cost_isu"]
     ws_ops_plan[f"N{new_row}"] = scorecard["std_cost_pop"]
+    ws_ops_plan[
+        f"O{new_row}"
+    ] = f'{scorecard["std_cost_isu"]} / {scorecard["std_cost_pop"]}'
 
     tbl_ops_plan = ws_ops_plan.tables["Operations_and_Planning"]
     tbl_ops_plan.ref = f"A1:P{new_row}"
