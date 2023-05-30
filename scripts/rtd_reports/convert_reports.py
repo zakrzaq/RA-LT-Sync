@@ -234,9 +234,9 @@ def convert_reports(server=False):
     output += output_msg(f"{pr.done}Complete")
 
     # SCORECARD DATA
-    output += output_msg(f"{pr.info}Handle SCORECARD data")
-    handle_scorecard(scorecard.get())
-    output += output_msg(f"{pr.done}Complete")
+    # output += output_msg(f"{pr.info}Handle SCORECARD data")
+    # handle_scorecard(scorecard.get())
+    # output += output_msg(f"{pr.done}Complete")
 
     if server == True:
         return output, "Convert & format RTD reports"
