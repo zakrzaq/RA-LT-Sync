@@ -5,6 +5,7 @@ from scripts.rtd_reports.convert_reports import convert_reports
 from scripts.rtd_reports.filter_reports import filter_reports
 from scripts.lt_sync.split_loadfile import split_loadfile
 from scripts.lt_sync.process_ltsync import process_ltsync
+from scripts.rtd_reports.aio import run_plasue_aio
 import scripts.summary as summary
 import scripts.exclusion as excl
 import scripts.extension as extn
@@ -56,6 +57,9 @@ def get_menu_choice():
         elif choice == "3":
             archive_reports()
             clear()
+        elif choice == "4":
+            run_plasue_aio()
+            clear()
         elif choice == "5":
             process_ltsync()
             clear()
@@ -78,7 +82,6 @@ def get_menu_choice():
             os.system("git pull && pip install -r requirements.txt")
             clear()
         elif choice == "x" or choice == "X":
-            int_choice = -1
             print("Exiting...")
             loop = False
         else:

@@ -13,20 +13,20 @@ os.system("copy nul > .env")
 
 
 # LOCAL SYSTEM
-os.system("echo env\\Scripts\\Activate.ps >> lt_sync.bat")
+os.system("echo env\\Scripts\\Activate.ps1 >> lt_sync.bat")
 os.system("echo env\\Scripts\\activate.bat >> lt_sync.bat")
 os.system("echo python app.py >> lt_sync.bat")
 
-# FIND FOLDERS
-userdir = rf"C:\Users\{os.getlogin()}"
-ra_app = r"C:\RA-Apps"
-scorecard = rf"{find_directory('EDM_Brazil - SCORECARD')}\SCORECARD - Metrics Goal Attainment Tracking.xlsx"
+# # FIND FOLDERS
+# userdir = rf"C:\Users\{os.getlogin()}"
+# ra_app = r"C:\RA-Apps"
+# scorecard = rf"{find_directory('EDM_Brazil - SCORECARD')}\SCORECARD - Metrics Goal Attainment Tracking.xlsx"
 
-# FIND AND LOAD DOT ENV
-import dotenv
+# # FIND AND LOAD DOT ENV
+# import dotenv
 
-dotenv_file = dotenv.find_dotenv()
-dotenv.load_dotenv(dotenv_file)
+# dotenv_file = dotenv.find_dotenv()
+# dotenv.load_dotenv(dotenv_file)
 
 
 # # print(homedir)
