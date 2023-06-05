@@ -18,3 +18,4 @@ test.*
 INPUTS/
 OUTPUTS/
 lt_sync.bat
+configs/*

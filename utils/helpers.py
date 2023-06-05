@@ -4,6 +4,7 @@ import os
 import shutil
 import dotenv
 import platform
+import warnings
 import utils.prompts as pr
 from state.output import output
 from typing import Tuple
@@ -12,6 +13,10 @@ from typing import Tuple
 def use_dotenv():
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
+
+
+def ignore_warnings():
+    warnings.filterwarnings("ignore")
 
 
 def await_char(char="y", msg="", func="", param=""):

@@ -21,15 +21,18 @@ def get_menu_choice():
         print("1)    RTD: Filter and gather reports")
         print("2)    RTD: Convert and format reports")
         print("3)    RTD: Cleanup and archive reports")
+        print("4)    RTD: AIO reports")
         print(78 * "-")
-        print("4)    LT SYNC: Process")
-        print("5)    LT SYNC: Split loadfile")
-        print("6)    SUMMARY: Prepare summary file")
+        print("5)    LT SYNC: Process")
+        print("6)    LT SYNC: Split loadfile")
+        print("7)    LT SYNC: AIO LT Sync")
         print(78 * "-")
-        print("7)    EXCLUSION LIST: add new parts")
-        print("8)    PDT EXTENSION: add new parts")
+        print("8)    SUMMARY: Prepare summary file")
         print(78 * "-")
-        print("9)    UTILITY: archive old RTD reports")
+        print("9)    EXCLUSION LIST: add new parts")
+        print("10)   PDT EXTENSION: add new parts")
+        print(78 * "-")
+        print("11)   UTILITY: archive old RTD reports")
 
         print(78 * "-")
         print("U)    Update program")
@@ -53,22 +56,22 @@ def get_menu_choice():
         elif choice == "3":
             archive_reports()
             clear()
-        elif choice == "4":
+        elif choice == "5":
             process_ltsync()
             clear()
-        elif choice == "5":
+        elif choice == "6":
             split_loadfile()
             clear()
-        elif choice == "6":
+        elif choice == "8":
             summary.prepare()
             clear()
-        elif choice == "7":
+        elif choice == "9":
             excl.add()
             clear()
-        elif choice == "8":
+        elif choice == "10":
             extn.add()
             clear()
-        elif choice == "9":
+        elif choice == "11":
             util.archive_old_in_rtd()
             clear()
         elif choice == "u" or choice == "U":
