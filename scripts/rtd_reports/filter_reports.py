@@ -60,4 +60,4 @@ def filter_reports(server=False):
                 reports_found += 1
 
     output.add(f"Reports moved to DATA directory:  {reports_found}.")
-    end_script()
+    end_script(title="Filter RTD reports")

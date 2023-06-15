@@ -1,0 +1,180 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap");
+
+:root {
+  --blue: rgb(16, 93, 209);
+  --red: rgb(165, 49, 55);
+  --green: rgb(58, 124, 61);
+  --orange: rgb(145, 129, 62);
+  --white: #ffffff;
+  --light-gray: rgb(242, 242, 242);
+  --v-dark-gray: rgb(48, 48, 48);
+  --shadd: 0 0 11px rgba(33, 33, 33, 0.2);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Lato", sans-serif !important;
+  font-size: 12px;
+  background-color: var(--light-gray);
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+.mt-30 {
+  margin-top: 30px;
+}
+.mb-30 {
+  margin-bottom: 30px;
+}
+
+.bold {
+  font-weight: 700;
+}
+
+.red {
+  color: var(--red);
+}
+
+a.menu-option,
+button.menu-option {
+  padding: 8px 16px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  background-color: var(--blue);
+  color: var(--white);
+  border-radius: 8px;
+  border: 1px solid var(--blue);
+  transition: 0.3s;
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+a.menu-option:hover {
+  background-color: var(--white);
+  color: var(--blue);
+  box-shadow: var(--shadd);
+}
+
+a.menu-option-orange {
+  background-color: var(--orange);
+  border: 1px solid var(--orange);
+  color: var(--white);
+}
+
+a.menu-option-orange:hover {
+  background-color: var(--white);
+  color: var(--orange);
+}
+
+a.menu-option-red {
+  background-color: var(--red);
+  border: 1px solid var(--red);
+  color: var(--white);
+}
+
+a.menu-option-red:hover {
+  background-color: var(--white);
+  color: var(--red);
+}
+
+a.menu-option-green {
+  background-color: var(--green);
+  border: 1px solid var(--green);
+  color: var(--white);
+}
+
+a.menu-option-green:hover {
+  background-color: var(--white);
+  color: var(--green);
+}
+
+h1,
+h2,
+h3 {
+  text-align: center;
+}
+
+.code-output {
+  background-color: var(--v-dark-gray);
+  color: var(--light-gray);
+  border-radius: 12px;
+  padding: 15px;
+  font-family: "Lucida Console", "Courier New", monospace;
+  margin: 40px 0 60px;
+  font-size: 12px;
+}
+
+p.code-line {
+  margin: 5px 0;
+}
+
+.header {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  background-color: var(--blue);
+  color: var(--white);
+  box-shadow: var(--shadd);
+}
+
+.header .logo {
+  width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header .title {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.title-text {
+  font-weight: 300;
+  text-align: left;
+}
+
+a.tag-option {
+  font-size: 10px;
+  padding: 4px 12px;
+  margin-bottom: 15px;
+  text-decoration: none;
+  background-color: var(--v-dark-gray);
+  color: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--v-dark-gray);
+  transition: 0.3s;
+  display: inline-block;
+  text-align: center;
+}
+
+a.tag-option:hover {
+  background-color: var(--white);
+  color: var(--v-dark-gray);
+  border: 1px solid var(--v-dark-gray);
+  transition: 0.3s;
+}
+
+a.tag-option-red {
+  background-color: var(--red);
+  color: var(--light-gray);
+  border: var(--red) 1px solid;
+}
+a.tag-option-red:hover {
+  background-color: var(--light-gray);
+  color: var(--red);
+  border: var(--red) 1px solid;
+}
+
+.sap-scripts {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}

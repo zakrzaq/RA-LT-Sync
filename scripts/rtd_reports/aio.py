@@ -5,6 +5,7 @@ from openpyxl import load_workbook
 
 from utils.helpers import use_dotenv, check_dir, ignore_warnings
 from utils.plause import plause_files
+from api.rtd.rtd_connector import connect_rtd, close_rtd
 
 
 def run_plasue_aio():

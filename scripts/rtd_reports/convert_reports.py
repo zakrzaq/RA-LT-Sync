@@ -4,7 +4,7 @@ from openpyxl import load_workbook
 import warnings
 
 from utils.score_card import handle_scorecard
-from utils.helpers import use_dotenv, await_char, output_msg, check_dir
+from utils.helpers import use_dotenv, await_char, output_msg, check_dir, end_script
 import utils.prompts as pr
 
 use_dotenv()
@@ -34,10 +34,15 @@ class ScorecardState(object):
         self.scorecard[key] = value
 
 
-def convert_reports(server=False):
+def convert_reports(server=False, date=None):
     warnings.simplefilter("ignore")
 
-    report_date = input(f"{pr.prmt}Please provide report date in MM-DD-YYYY format: \n")
+    if date == None:
+        report_date = input(
+            f"{pr.prmt}Please provide report date in MM-DD-YYYY format: \n"
+        )
+    else:
+        report_date = date
 
     output = ""
     scorecard = ScorecardState()
@@ -238,10 +243,4 @@ def convert_reports(server=False):
     # handle_scorecard(scorecard.get())
     # output += output_msg(f"{pr.done}Complete")
 
-    if server == True:
-        return output, "Convert & format RTD reports"
-    else:
-        await_char(
-            "y",
-            f"\n{pr.prmt}Finished! Please find reports in {report_date} directory. \nPress Y to close.",
-        )
+    end_script(True, "Convert RTD reports")

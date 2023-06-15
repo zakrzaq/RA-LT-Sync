@@ -40,7 +40,7 @@ WHERE
   AND a.dispo = y.dispo
   AND c.werks = z.werks
   AND c.dispo = z.dispo -- filters
-  AND d.mtart NOT IN ('ZCFG', 'ZREP')
+  AND d.mtart NOT IN ('ZCFG', 'ZREP', 'ZFG')
   AND a.mmsta NOT IN (
     '07',
     '08',

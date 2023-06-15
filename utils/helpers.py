@@ -72,11 +72,12 @@ def check_dir(dir):
         os.mkdir(dir)
 
 
-def end_script(server=False):
+def end_script(server=False, title=""):
     if server:
-        return output.get_markup()
+        return output.get_markup(), title
     else:
         await_char("y", "Script completed.")
+        return "No Title", "No Output"
 
 
 def clear():
