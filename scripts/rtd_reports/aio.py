@@ -50,7 +50,7 @@ def run_plasue_aio():
         pvt_sheet = "summary"
 
         con = connect_rtd()[0]
-        sql_command = open(os.path.join("sql", file), "r").read()
+        sql_command = open(os.path.join("sql", 'planning_plause', file), "r").read()
         chunks = pd.read_sql_query(sql_command, con, chunksize=100)
         df = pd.DataFrame()
         for chunk in tqdm(chunks):
@@ -157,3 +157,4 @@ def run_plasue_aio():
                 sht = wb.active
                 sht["D2"] = total
                 wb.save(filename=f)
+
